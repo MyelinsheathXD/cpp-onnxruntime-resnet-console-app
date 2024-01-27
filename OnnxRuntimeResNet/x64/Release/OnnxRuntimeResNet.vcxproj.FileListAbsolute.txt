@@ -1,0 +1,4 @@
+E:\AdaptiveCELLS\VSprojects\cpp\gits\2024\01\cpp-onnxruntime-resnet-console-app\x64\Release\onnxruntime.dll
+E:\AdaptiveCELLS\VSprojects\cpp\gits\2024\01\cpp-onnxruntime-resnet-console-app\x64\Release\onnxruntime_providers_shared.dll
+E:\AdaptiveCELLS\VSprojects\cpp\gits\2024\01\cpp-onnxruntime-resnet-console-app\x64\Release\onnxruntime_providers_cuda.dll
+E:\AdaptiveCELLS\VSprojects\cpp\gits\2024\01\cpp-onnxruntime-resnet-console-app\x64\Release\onnxruntime_providers_tensorrt.dll
