@@ -1,7 +1,18 @@
 #include <onnxruntime_cxx_api.h>
 #include <iostream>
+// C++ program to generate random float numbers
+//#include <bits/stdc++.h>
+
+using namespace std;
+
 
 #include "Helpers.cpp"
+
+
+float randomFloat()
+{
+	return (float)(rand()) / (float)(RAND_MAX);
+}
 
 void main()
 {
@@ -10,7 +21,7 @@ void main()
 	Ort::Session session(nullptr);
 
 
-	constexpr int64_t numClasses = 30;
+	constexpr int64_t numOutputElements = 30;
 	constexpr int64_t numInputElements = 35;
 
 	auto modelPath = L"E:\\AdaptiveCELLS\\VSprojects\\cpp\\gits\\2024\\01\\cpp-onnxruntime-resnet-console-app\\OnnxRuntimeResNet\\assets\\ImageClassifier.onnx";
@@ -25,7 +36,11 @@ void main()
 
 	// define array
 	std::array<float, numInputElements> input;
-	std::array<float, numClasses> results;
+	std::array<float, numOutputElements> results;
+
+	for (int i = 0; i < input.size(); i++) {
+		input[i] = randomFloat();
+	}
 
 	// define Tensor
 	auto memory_info = Ort::MemoryInfo::CreateCpu(OrtDeviceAllocator, OrtMemTypeCPU);
@@ -66,7 +81,7 @@ void main()
 	float* floatarr = inputTensor.GetTensorMutableData<float>();
 	//int* floatarr = outputTensor[0].GetTensorMutableData<int>();
 	//std::cout<< floatarr[0] << std::endl;
-	for (size_t i = 0; i < 35; i++)
+	for (size_t i = 0; i < numInputElements; i++)
 	{
 		std::cout << i + 1 << ": " << floatarr[i] << " " <<"input " << std::endl;
 	}
@@ -75,7 +90,7 @@ void main()
 	float* floatarr2 = outputTensor.GetTensorMutableData<float>();
 	//int* floatarr = outputTensor[0].GetTensorMutableData<int>();
 	//std::cout << floatarr[0] << std::endl;
-	for (size_t i = 0; i < 31; i++)
+	for (size_t i = 0; i < numOutputElements; i++)
 	{
 		std::cout << i + 1 << ": " << floatarr2[i] << " " << "output " << std::endl;
 	}
