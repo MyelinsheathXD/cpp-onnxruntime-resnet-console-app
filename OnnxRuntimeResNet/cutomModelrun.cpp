@@ -9,24 +9,19 @@ void main()
 	Ort::RunOptions runOptions;
 	Ort::Session session(nullptr);
 
-	constexpr int64_t numChannels = 3;
-	constexpr int64_t width = 224;
-	constexpr int64_t height = 224;
-	constexpr int64_t numClasses = 1000;
-	constexpr int64_t numInputElements = numChannels * height * width;
 
+	constexpr int64_t numClasses = 30;
+	constexpr int64_t numInputElements = 35;
 
-	const std::string imageFile = "E:\\AdaptiveCELLS\\VSprojects\\cpp\\pr\\2024\\01\\onnxcpp\\OnnxRuntimeResNet\\assets\\dog.png";
-	const std::string labelFile = "E:\\AdaptiveCELLS\\VSprojects\\cpp\\pr\\2024\\01\\onnxcpp\\OnnxRuntimeResNet\\assets\\imagenet_classes.txt";
-	auto modelPath = L"E:\\AdaptiveCELLS\\VSprojects\\cpp\\pr\\2024\\01\\onnxcpp\\OnnxRuntimeResNet\\assets\\resnet50v2.onnx";
-	//auto modelPath = L"model_weights35.onnx";
+	auto modelPath = L"E:\\AdaptiveCELLS\\VSprojects\\cpp\\gits\\2024\\01\\cpp-onnxruntime-resnet-console-app\\OnnxRuntimeResNet\\assets\\ImageClassifier.onnx";
+	
 
 	// Use CPU--------------------------------------------
 	session = Ort::Session(env, modelPath, Ort::SessionOptions{ nullptr });
 
 	// define shape
-	const std::array<int64_t, 4> inputShape = { 1, numChannels, height, width };
-	const std::array<int64_t, 2> outputShape = { 1, numClasses };
+	const std::array<int64_t, 2> inputShape = { 1,35 };
+	const std::array<int64_t, 2> outputShape = { 1, 30 };
 
 	// define array
 	std::array<float, numInputElements> input;
@@ -37,8 +32,6 @@ void main()
 	auto inputTensor = Ort::Value::CreateTensor<float>(memory_info, input.data(), input.size(), inputShape.data(), inputShape.size());
 	auto outputTensor = Ort::Value::CreateTensor<float>(memory_info, results.data(), results.size(), outputShape.data(), outputShape.size());
 
-	// copy image data to input array
-	//std::copy(imageVec.begin(), imageVec.end(), input.begin());
 
 
 
@@ -67,11 +60,24 @@ void main()
 	}
 	std::sort(indexValuePairs.begin(), indexValuePairs.end(), [](const auto& lhs, const auto& rhs) { return lhs.second > rhs.second; });
 
-	// show Top5
-	/*for (size_t i = 0; i < 5; ++i) {
-		const auto& result = indexValuePairs[i];
-		std::cout << i + 1 << ": " << labels[result.first] << " " << result.second << std::endl;
-	}*/
 
+
+	// Get pointer to output tensor float values
+	float* floatarr = inputTensor.GetTensorMutableData<float>();
+	//int* floatarr = outputTensor[0].GetTensorMutableData<int>();
+	//std::cout<< floatarr[0] << std::endl;
+	for (size_t i = 0; i < 35; i++)
+	{
+		std::cout << i + 1 << ": " << floatarr[i] << " " <<"input " << std::endl;
+	}
+
+	// Get pointer to output tensor float values
+	float* floatarr2 = outputTensor.GetTensorMutableData<float>();
+	//int* floatarr = outputTensor[0].GetTensorMutableData<int>();
+	//std::cout << floatarr[0] << std::endl;
+	for (size_t i = 0; i < 31; i++)
+	{
+		std::cout << i + 1 << ": " << floatarr2[i] << " " << "output " << std::endl;
+	}
 
 }
