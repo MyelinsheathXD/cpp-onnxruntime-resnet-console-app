@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="cutomModelrun.cpp" />
     <ClCompile Include="Helpers.cpp" />
     <ClCompile Include="OnnxRuntimeResNet.cpp" />
   </ItemGroup>
